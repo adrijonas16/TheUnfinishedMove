@@ -50,3 +50,7 @@
 - Real Room: start faces away from the desk; Match Cut anchor moved to the desk (radius 200, stricter alignment) so it no longer fires on spawn. Sun removed from the room, dim lamp/fill.
 - Factory patrol: slower (0.35), shorter sweep (900), smaller catch radius (170); new checkpoint CP_Loom2 at the lane start.
 - Exposure: all maps switched to fixed histogram EV100 (no more Lumen "lighting clipped" warning).
+
+## Thu 10:40 — Factory art pass 2
+- Interior: Abandoned Warehouse photoscan scene (CC BY, AurelienM) scaled x8 as the hall shell; graybox side walls and roof now invisible (collision kept).
+- Exterior: facade now renders (own two-sided MAT_Photoscan + MIs), yard rebuilt (asphalt, sodium lights, passage), Megascans grass clumps, dead trees, burnt trunk, rubble/pallets/drums.
