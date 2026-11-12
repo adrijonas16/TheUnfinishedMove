@@ -17,7 +17,7 @@ def rain_mat(name, opacity, speed, tile_u, tile_v, glass=False):
     tc = MEL.create_material_expression(m, unreal.MaterialExpressionTextureCoordinate, -1100, 0); tc.set_editor_property("u_tiling", tile_u); tc.set_editor_property("v_tiling", tile_v)
     pn = MEL.create_material_expression(m, unreal.MaterialExpressionPanner, -900, 0); pn.set_editor_property("speed_x", 0.0); pn.set_editor_property("speed_y", -speed)
     MEL.connect_material_expressions(tc, "", pn, "Coordinate")
-    tx = MEL.create_material_expression(m, unreal.MaterialExpressionTextureSample, -700, 0); tx.set_editor_property("texture", EAL.load_asset("/Engine/EngineMaterials/Good64x64TilingNoiseHighFreq"))
+    tx = MEL.create_material_expression(m, unreal.MaterialExpressionTextureSample, -700, 0); tx.set_editor_property("texture", EAL.load_asset("/Engine/EngineMaterials/Good64x64TilingNoiseHighFreq")); tx.set_editor_property("sampler_type", unreal.MaterialSamplerType.SAMPLERTYPE_LINEAR_GRAYSCALE)
     MEL.connect_material_expressions(pn, "", tx, "UVs")
     pw = MEL.create_material_expression(m, unreal.MaterialExpressionPower, -500, 0); pw.set_editor_property("const_exponent", 6.0 if not glass else 10.0)
     MEL.connect_material_expressions(tx, "R", pw, "Base")
