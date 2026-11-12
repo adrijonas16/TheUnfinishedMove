@@ -54,3 +54,9 @@
 ## Thu 10:40 — Factory art pass 2
 - Interior: Abandoned Warehouse photoscan scene (CC BY, AurelienM) scaled x8 as the hall shell; graybox side walls and roof now invisible (collision kept).
 - Exterior: facade now renders (own two-sided MAT_Photoscan + MIs), yard rebuilt (asphalt, sodium lights, passage), Megascans grass clumps, dead trees, burnt trunk, rubble/pallets/drums.
+
+## Thu 11:00 — Factory looks real
+- Game starts inside the factory again. Zone labels removed.
+- Graybox looms replaced by Megascans metal containers, fabric covers by tarps; floors dirty concrete, walls painted concrete, steps/catwalks corroded metal (world-aligned ORM master).
+- Warehouse windows now dirty translucent glass; city of photoscanned brick buildings outside with warm window lights; night lighting.
+- Exterior yard: gravel + soil/burnt-grass/concrete patches, broken slabs, rubble mounds, puddles, boards, chains, rusty sheets, dense grass and weeds.
