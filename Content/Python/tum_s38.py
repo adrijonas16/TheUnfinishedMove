@@ -114,7 +114,7 @@ def mover():
 
 def trigger():
     bp(TR)
-    TG.ensure_vars(TR, [("Radius", "float"), ("ShowTag", "name"), ("HideTag", "name"), ("HideTag2", "name"), ("Flag", "int"), ("bOpenMap", "bool"), ("TargetMap", "name"), ("bUsed", "bool"), ("bStartDisabled", "bool")])
+    TG.ensure_vars(TR, [("Radius", "float"), ("ShowTag", "name"), ("HideTag", "name"), ("HideTag2", "name"), ("Flag", "int"), ("bOpenMap", "bool"), ("TargetMap", "name"), ("bUsed", "bool"), ("bStartDisabled", "bool"), ("bCine", "bool")])
     g = lambda n: f"(Variables|Default|Get{n})"
     def setflag(var, pin, n): return f"(Class|BPGameProgress|Set{var} :self gi :{pin} (or (Class|BPGameProgress|Get{var} :self gi) (== {g('Flag')} {n})))"
     code = f"""
@@ -149,14 +149,32 @@ def trigger():
         {setflag('HasFocusCut', 'bHasFocusCut', 3)}
         {setflag('GameEnded', 'GameEnded', 4)}
         (Input|DisableInput :self (Game|GetPlayerCharacter 0) :PlayerController (Game|GetPlayerController 0))
-        (Utilities|FlowControl|Delay 0.5)
-        (CameraFades|StartCameraFade :self (Game|GetPlayerCameraManager 0) :FromAlpha 0.0 :ToAlpha 1.0 :Duration 1.0 :Color {BLACK} :bHoldWhenFinished true)
-        (Utilities|FlowControl|Delay 1.1)
-        (Game|OpenLevel(byName) :LevelName {g('TargetMap')}))
+        (if {g('Cine')}
+          (Rendering|SetActorHiddenInGame :self (Game|GetPlayerCharacter 0) :bNewHidden true)
+          (for c1 (Actor|GetAllActorswithTag :Tag "Cine_1") (Game|Player|SetViewTargetwithBlend :self (Game|GetPlayerController 0) :NewViewTarget c1 :BlendTime 1.2))
+          (Utilities|FlowControl|Delay 1.6)
+          (for e (Actor|GetAllActorswithTag :Tag "Earbuds") (Rendering|SetActorHiddenInGame :self e :bNewHidden true))
+          (for m (Actor|GetAllActorswithTag :Tag "IntroMusic")
+            (bind am (Utilities|Casting|CastToAmbientSound :Object m)
+              (:then (Components|Activation|Activate :self (Class|AmbientSound|GetAudioComponent :self am) :bReset true))
+              (:CastFailed)))
+          (Utilities|FlowControl|Delay 1.4)
+          (for c2 (Actor|GetAllActorswithTag :Tag "Cine_2") (Game|Player|SetViewTargetwithBlend :self (Game|GetPlayerController 0) :NewViewTarget c2 :BlendTime 2.5))
+          (Utilities|FlowControl|Delay 4.5)
+          (for c3 (Actor|GetAllActorswithTag :Tag "Cine_3") (Game|Player|SetViewTargetwithBlend :self (Game|GetPlayerController 0) :NewViewTarget c3 :BlendTime 6.0))
+          (Utilities|FlowControl|Delay 4.5)
+          (CameraFades|StartCameraFade :self (Game|GetPlayerCameraManager 0) :FromAlpha 0.0 :ToAlpha 1.0 :Duration 2.0 :Color {SILVER} :bHoldWhenFinished true)
+          (Utilities|FlowControl|Delay 2.1)
+          (Game|OpenLevel(byName) :LevelName {g('TargetMap')})
+          (else
+            (Utilities|FlowControl|Delay 0.5)
+            (CameraFades|StartCameraFade :self (Game|GetPlayerCameraManager 0) :FromAlpha 0.0 :ToAlpha 1.0 :Duration 1.0 :Color {BLACK} :bHoldWhenFinished true)
+            (Utilities|FlowControl|Delay 1.1)
+            (Game|OpenLevel(byName) :LevelName {g('TargetMap')}))))
       (:CastFailed))))
 """
     r = TG.run(TR, code, events=["Fire"], clear=True)
-    editable(TR, ["Radius", "ShowTag", "HideTag", "HideTag2", "Flag", "bOpenMap", "TargetMap", "bStartDisabled"], {"Radius": 200.0, "TargetMap": "M_FactoryHub"})
+    editable(TR, ["Radius", "ShowTag", "HideTag", "HideTag2", "Flag", "bOpenMap", "TargetMap", "bStartDisabled", "bCine"], {"Radius": 200.0, "TargetMap": "M_FactoryHub"})
     return r
 
 def anchor():
