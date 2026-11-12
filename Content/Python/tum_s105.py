@@ -21,6 +21,6 @@ def place_dome(m, center, radius=6000.0, yaw=0.0, label="City_Dome"):
         if a.get_actor_label() == label: eas.destroy_actor(a)
     a = eas.spawn_actor_from_object(EAL.load_asset("/Engine/BasicShapes/Sphere"), center, unreal.Rotator(roll=0, pitch=0, yaw=yaw))
     a.set_actor_scale3d(V(radius / 50, radius / 50, radius / 50)); a.static_mesh_component.set_material(0, m)
-    a.static_mesh_component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION); a.static_mesh_component.set_cast_shadow(False)
+    a.static_mesh_component.set_collision_profile_name("NoCollision"); a.static_mesh_component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION); a.set_actor_enable_collision(False); a.static_mesh_component.set_cast_shadow(False)
     a.set_actor_label(label); a.set_folder_path("Art/City"); a.tags = [unreal.Name("ArtPass")]
     return a
