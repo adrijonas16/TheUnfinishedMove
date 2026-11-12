@@ -23,3 +23,9 @@ SourceArt/
 _xfer/
 __pycache__/
 *.pyc
+
+# Fab / Megascans content (Fab Standard License: not redistributable in a public repo)
+Content/DerelictCorridor/
+Content/MS/
+Content/MSPresets/
+Content/DarkRuins/

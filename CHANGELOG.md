@@ -34,3 +34,8 @@
 - CC0 ambientCG surfaces (world-aligned master MAT_SurfaceWorld + 11 instances) applied to all maps.
 - Per-map post process (manual exposure, teal grade for real world, vignette, grain) and fog colour.
 - MetaHumanCharacter + MetaHumanGenerator plugins enabled (editor restart needed).
+
+## Thu — Art pass 1 + hero props
+- Fab samples copied locally (Derelict Corridor, Dark Ruins Megascans; not in repo). War: ruin lane walls, cover ruins, crates/barrels/boards, stakes, dry grass, dead trees, church-ruin arch shrine with sword and rope. Cliff: far rock pillars. Factory: hanging lights, chains, pipes, cables, pallets, oil containers, debris, nave pillars, table and chairs.
+- Meshy hero props imported: white knight (table, chess pads, bedroom ending) and silver seal (War shrine).
+- MetaHuman creation via Python crashed: MetaHuman Optional Content not installed (skin textures missing).
