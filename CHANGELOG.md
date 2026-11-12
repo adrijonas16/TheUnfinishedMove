@@ -19,3 +19,6 @@
 - BP_DragonRoute + M_Cut_Dragon graybox: guided forward flight, 3 lanes, storm walls, 3 wind currents that need a Boost (soft push-back if missed), end → DragonDone + HasBoost, back to the factory.
 - BP_FactoryRoute: returns the player to the saved spot, shows the DragonLift crates, removes the used anchor, unlocks Boost from progress.
 - BP_TUMCharacter: Boost locked by default; on foot = launch, while flying = 0.7 s speed burst; records LastBoostTime.
+
+## Thu — First packaged Windows build (Test01)
+- Packaged via RunUAT BuildCookRun (Development, 5 TUM maps). Fix: GameFeatureData entry in AssetManagerSettings (cook failed without it); UAT needs -unrealexe for this content-only project. Size ~1 GB (to trim later).
