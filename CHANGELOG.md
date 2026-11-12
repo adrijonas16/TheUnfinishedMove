@@ -22,3 +22,10 @@
 
 ## Thu — First packaged Windows build (Test01)
 - Packaged via RunUAT BuildCookRun (Development, 5 TUM maps). Fix: GameFeatureData entry in AssetManagerSettings (cook failed without it); UAT needs -unrealexe for this content-only project. Size ~1 GB (to trim later).
+
+## Thu — Full graybox loop
+- Character: soft-fail respawn (nearest checkpoint behind, KillZ), Focus Cut (F / gamepad Y): freezes FocusPause actors 12 s, recharges after 6 s.
+- BP_Mover (patrols, soldiers, crushers), BP_Trigger (show/hide groups, progress flags, open map), BP_AlignAnchor reveal mode, BP_RealRoomRoute.
+- Factory: patrol light in loom lane, War anchor on catwalk, fabric ramp + Cliff ledge after War, Focus Gate crusher, chess pads (Block/Diagonal/Expose) and exit cell -> Real Room ending.
+- M_Cut_WarField (cover / wagons / mud-Boost routes, rope + silver seal), M_Cut_Cliff (reveal glass platforms by framing the arch, Boost gaps, awards Focus Cut), M_RealRoom (lamp match cut in, morning ending).
+- Game starts in M_RealRoom. Art references in design/reference (AI concept images, ours).
