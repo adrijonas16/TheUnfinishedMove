@@ -18,3 +18,8 @@ Content/Fab/
 Content/Megascans/
 # Source art staging
 SourceArt/
+
+# transfer + python cache
+_xfer/
+__pycache__/
+*.pyc

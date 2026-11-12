@@ -44,6 +44,8 @@ def _tick(dt):
     _state["busy"] = True
     try:
         _beat()
+        if unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem).get_game_world():
+            return          # never edit assets while Play-In-Editor is running; queued scripts wait
         for f in sorted(glob.glob(os.path.join(QUEUE, "*.py"))):
             _run(f)
     finally:
