@@ -122,7 +122,8 @@ def trigger():
   (Actor|Tick|SetActorTickEnabled :bEnabled (not {g('StartDisabled')})))
 
 (event EventTick (DeltaSeconds)
-  (if (and (not {g('Used')}) (< (Transformation|GetDistanceTo :OtherActor (Game|GetPlayerCharacter 0)) {g('Radius')}))
+  (bind dist (Transformation|GetDistanceTo :OtherActor (Game|GetPlayerCharacter 0)))
+  (if (and (not {g('Used')}) (and (> dist 1.0) (< dist {g('Radius')})))
     (Variables|Default|SetUsed true)
     (CallFunction|Fire)))
 
