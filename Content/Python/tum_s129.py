@@ -41,6 +41,9 @@ def unlit(intensity=2.5):
                     if tex is None or "base" in nm or "color" in nm or "diffuse" in nm: tex = v.parameter_value
                     if "base" in nm or "color" in nm: break
                 n = "MI_City_" + key[:40]; p = "/Game/TUM/Environment/City/" + n
+                if EAL.does_asset_exist(p) and not key.startswith("MI_City_"):
+                    done[key] = EAL.load_asset(p); c.set_material(i, done[key]); continue
+                if key.startswith("MI_City_"): done[key] = om; continue
                 mi = EAL.load_asset(p) if EAL.does_asset_exist(p) else AT.create_asset(n, "/Game/TUM/Environment/City", unreal.MaterialInstanceConstant, unreal.MaterialInstanceConstantFactoryNew())
                 MEL.set_material_instance_parent(mi, parent)
                 if tex: MEL.set_material_instance_texture_parameter_value(mi, "Tex", tex)
@@ -48,3 +51,14 @@ def unlit(intensity=2.5):
             c.set_material(i, done[key])
     unreal.get_editor_subsystem(unreal.LevelEditorSubsystem).save_current_level()
     return len(done)
+def place_multi(spots, scale=30.0, prefix="City3D_"):
+    for a in E().get_all_level_actors():
+        if a.get_actor_label().startswith(prefix): E().destroy_actor(a)
+    meshes = [EAL.load_asset(p) for p in EAL.list_assets("/Game/TUM/Environment/City/LANightCity", True, False) if isinstance(EAL.load_asset(p), unreal.StaticMesh)]
+    n = 0
+    for (loc, yaw) in spots:
+        for m in meshes:
+            a = E().spawn_actor_from_object(m, V(*loc), unreal.Rotator(roll=0, pitch=0, yaw=yaw)); a.set_actor_scale3d(V(scale, scale, scale))
+            c = a.static_mesh_component; c.set_collision_profile_name("NoCollision"); c.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION); c.set_cast_shadow(False)
+            a.set_actor_label(f"{prefix}{n}"); a.set_folder_path("Art/City"); a.tags = [unreal.Name("ArtPass")]; n += 1
+    return n
