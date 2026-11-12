@@ -5,7 +5,7 @@ AR = unreal.AssetRegistryHelpers.get_asset_registry(); V = unreal.Vector
 _cache = {}
 def mesh(sub):
     if not _cache:
-        for root in ("/Game/MS/3D", "/Game/DerelictCorridor/Assets", "/Game/Fab/Megascans"):
+        for root in ("/Game/MS/3D", "/Game/DerelictCorridor/Assets", "/Game/Fab/Megascans", "/Game/OldFurniturePack_01", "/Game/FreeFurniturePack", "/Game/VintageRadio", "/Game/TUM/Props"):
             for a in AR.get_assets_by_path(root, recursive=True):
                 if str(a.asset_class_path.asset_name) == "StaticMesh": _cache[str(a.asset_name)] = str(a.package_name)
     names = sorted(n for n in _cache if sub.lower() in n.lower())

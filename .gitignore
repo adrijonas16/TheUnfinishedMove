@@ -29,5 +29,11 @@ Content/DerelictCorridor/
 Content/MS/
 Content/MSPresets/
 Content/DarkRuins/
-Content/TUM/Environment/
+Content/TUM/Environment/*
 Content/Fab/
+Content/OldFurniturePack_01/
+Content/FreeFurniturePack/
+Content/VintageRadio/
+!Content/TUM/Environment/Backdrops/
+Content/TUM/Props/PolyHaven/
+_to_delete/
