@@ -45,3 +45,8 @@
 - Imported Kaarina warehouse and Abandoned Warehouse interior (CC BY) for the interior pass.
 - Fab plugin: Megascans grass and dead trees added from the library; Medieval Village sample downloading.
 - Hardware note: GTX 1660 Ti 6 GB — editor hit VRAM budget; environment textures capped at 2048.
+
+## Thu 10:30 — Fixes from playtest
+- Real Room: start faces away from the desk; Match Cut anchor moved to the desk (radius 200, stricter alignment) so it no longer fires on spawn. Sun removed from the room, dim lamp/fill.
+- Factory patrol: slower (0.35), shorter sweep (900), smaller catch radius (170); new checkpoint CP_Loom2 at the lane start.
+- Exposure: all maps switched to fixed histogram EV100 (no more Lumen "lighting clipped" warning).
