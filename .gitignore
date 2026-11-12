@@ -1,0 +1,20 @@
+# Unreal generated
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+Build/
+*.sln
+.vs/
+.idea/
+# Packaged builds and videos (upload to itch.io, not Git)
+Packaged/
+*.zip
+*.mp4
+# Large re-downloadable packs (log them in assets/ASSET_LEDGER.md instead)
+Content/StarterContent/
+Content/MetaHumans/
+Content/Fab/
+Content/Megascans/
+# Source art staging
+SourceArt/
