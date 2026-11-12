@@ -29,3 +29,8 @@
 - Factory: patrol light in loom lane, War anchor on catwalk, fabric ramp + Cliff ledge after War, Focus Gate crusher, chess pads (Block/Diagonal/Expose) and exit cell -> Real Room ending.
 - M_Cut_WarField (cover / wagons / mud-Boost routes, rope + silver seal), M_Cut_Cliff (reveal glass platforms by framing the arch, Boost gaps, awards Focus Cut), M_RealRoom (lamp match cut in, morning ending).
 - Game starts in M_RealRoom. Art references in design/reference (AI concept images, ours).
+
+## Thu — Look pass 1
+- CC0 ambientCG surfaces (world-aligned master MAT_SurfaceWorld + 11 instances) applied to all maps.
+- Per-map post process (manual exposure, teal grade for real world, vignette, grain) and fog colour.
+- MetaHumanCharacter + MetaHumanGenerator plugins enabled (editor restart needed).
