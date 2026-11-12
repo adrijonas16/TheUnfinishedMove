@@ -39,3 +39,9 @@
 - Fab samples copied locally (Derelict Corridor, Dark Ruins Megascans; not in repo). War: ruin lane walls, cover ruins, crates/barrels/boards, stakes, dry grass, dead trees, church-ruin arch shrine with sword and rope. Cliff: far rock pillars. Factory: hanging lights, chains, pipes, cables, pallets, oil containers, debris, nave pillars, table and chairs.
 - Meshy hero props imported: white knight (table, chess pads, bedroom ending) and silver seal (War shrine).
 - MetaHuman creation via Python crashed: MetaHuman Optional Content not installed (skin textures missing).
+
+## Thu early AM — Exterior + library assets
+- Factory exterior arrival area: photoscan facade (CC BY), asphalt yard, sodium lights, passage into the hall; game now starts outside the factory.
+- Imported Kaarina warehouse and Abandoned Warehouse interior (CC BY) for the interior pass.
+- Fab plugin: Megascans grass and dead trees added from the library; Medieval Village sample downloading.
+- Hardware note: GTX 1660 Ti 6 GB — editor hit VRAM budget; environment textures capped at 2048.
