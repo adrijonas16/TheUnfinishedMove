@@ -22,11 +22,17 @@ def balance(code):
     for ch in code:
         d += (ch == "(") - (ch == ")")
     return d
-def run(bp_path, code, events=(), binds=()):
+def run(bp_path, code, events=(), binds=(), clear=False):
     """events: custom events to add first. binds: [(IA name, [(trigger pin, custom event)])] wired after the graph is written."""
     O = {"ok": [], "missing": [], "balance": balance(code)}
     if O["balance"]: raise RuntimeError("unbalanced parens: %d" % O["balance"])
     bp = EAL.load_asset(bp_path); _BlueprintCache.invalidate(bp)
+    _BlueprintCache.invalidate(bp); graph = unreal.BlueprintEditorLibrary.find_event_graph(bp)
+    if clear:
+        for n in list(BT.find_nodes(graph)):
+            t = BT._get_node_info(n).type_id
+            if not (t.startswith("Event|") and t.split("|")[-1] in ("EventBeginPlay", "EventTick", "EventActorBeginOverlap")): BT.delete_node(n)
+        _BlueprintCache.invalidate(bp)
     for ev in events: BT.add_event(bp, ev)
     _BlueprintCache.invalidate(bp); graph = unreal.BlueprintEditorLibrary.find_event_graph(bp)
     miss = check_ids(graph, code); O["missing"] = miss
@@ -45,3 +51,13 @@ def run(bp_path, code, events=(), binds=()):
         y += 200
     BT.compile_blueprint(bp); EAL.save_loaded_asset(bp, False); O["ok"].append("inputs")
     return O
+
+def ensure_vars(bp_path, items, objs=()):
+    from editor_toolset.toolsets.blueprint import ContainerType
+    bp = EAL.load_asset(bp_path); _BlueprintCache.invalidate(bp)
+    have = {str(getattr(v, "name", v)) for v in BT.list_variables(bp)}
+    for n, ty in items:
+        if n not in have: BT.add_variable(bp, n, ty)
+    for n, cls in objs:
+        if n not in have: BT.add_object_variable(bp, n, cls)
+    BT.compile_blueprint(bp); EAL.save_loaded_asset(bp, False); return bp

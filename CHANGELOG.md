@@ -13,3 +13,9 @@
 - BP_GameProgress (GameInstance: return transform, cut flags, Boost/Focus unlocks), BP_TUMCharacter (child of template) with Cut Boost (IA_Boost: LeftShift / RB; LaunchCharacter 1500 fwd + 480 up, 1.2 s cooldown), BP_TUMGameMode; set as project defaults.
 - Crane zone: three crate steps (DragonLift) up to the 300 cm deck; 640 cm Boost gap to the raised catwalk — tested in Play: reachable only with Boost.
 - Bridge skips while Play-In-Editor runs.
+
+## Thu — Vertical slice: Match Cut → Dragon → Factory
+- BP_AlignAnchor (Verbs): stand on the floor ring near the loom lane, line the round lamp up with the round window and hold ~0.35 s → silver flash, return point saved, fade, open M_Cut_Dragon.
+- BP_DragonRoute + M_Cut_Dragon graybox: guided forward flight, 3 lanes, storm walls, 3 wind currents that need a Boost (soft push-back if missed), end → DragonDone + HasBoost, back to the factory.
+- BP_FactoryRoute: returns the player to the saved spot, shows the DragonLift crates, removes the used anchor, unlocks Boost from progress.
+- BP_TUMCharacter: Boost locked by default; on foot = launch, while flying = 0.7 s speed burst; records LastBoostTime.
