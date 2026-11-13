@@ -6,6 +6,7 @@ from editor_toolset.toolsets.blueprint import BlueprintTools as BT
 EAL = unreal.EditorAssetLibrary; AT = unreal.AssetToolsHelpers.get_asset_tools(); BEL = unreal.BlueprintEditorLibrary
 E = unreal.get_editor_subsystem(unreal.EditorActorSubsystem); L = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
 V = unreal.Vector; R = "/Game/TUM"; DIR = f"{R}/Core/BP_IntroDirector"; ANIMS = f"{R}/Anims"
+GP = "(Utilities|Casting|CastToBP_GameProgress :Object (Game|GetGameInstance))"
 res = {"ok": [], "err": {}}
 def step(n, fn):
     try: r = fn(); res["ok"].append(n); res[n] = r
@@ -47,6 +48,7 @@ def inputs():
 
 # ---------------- director blueprint ----------------
 def director():
+    TG.ensure_vars("/Game/TUM/Core/BP_GameProgress", [("TitleShown", "bool")])
     if not EAL.does_asset_exist(DIR): BT.create(f"{R}/Core", "BP_IntroDirector", unreal.Actor.static_class())
     TG.ensure_vars(DIR, [("State", "int"), ("SeatYaw", "float")], objs=[("Chair", unreal.Actor.static_class()), ("Seat", unreal.Actor.static_class()),
                    ("SitDown", unreal.AnimSequence.static_class()), ("SitIdle", unreal.AnimSequence.static_class()), ("EarbudsAnim", unreal.AnimSequence.static_class())])
@@ -60,7 +62,19 @@ def director():
   (Input|EnableInput :PlayerController (Game|GetPlayerController 0))
   (Variables|Default|SetState 0)
   {hint("HintSit", "true")}
-  {hint("HintEarbuds", "true")})
+  {hint("HintEarbuds", "true")}
+  {hint("TitleUI", "true")}
+  (bind gi0 {GP}
+    (:then (if (not (Class|BPGameProgress|GetTitleShown :self gi0)) (CallFunction|ShowTitle)))
+    (:CastFailed)))
+
+(event Custom|ShowTitle
+  (Variables|Default|SetState -1)
+  {hint("TitleUI", "false")}
+  {hint("HUDText", "true")}
+  (Input|DisableInput :self (Game|GetPlayerCharacter 0) :PlayerController (Game|GetPlayerController 0))
+  {cam("Cine_Title", 0.0)}
+  {tagged("TitleMusic", "tm", "(bind atm (Utilities|Casting|CastToAmbientSound :Object tm) (:then (Components|Activation|Activate :self (Class|AmbientSound|GetAudioComponent :self atm) :bReset true)) (:CastFailed))")})
 
 (event EventTick (DeltaSeconds)
   (if (== {g('State')} 0)
@@ -69,9 +83,21 @@ def director():
 (event Custom|DoInteract
   (bind ch (Utilities|Casting|CastToCharacter :Object (Game|GetPlayerCharacter 0))
     (:then
+      (if (== {g('State')} -1)
+        (Variables|Default|SetState 0)
+        {hint("TitleUI", "true")}
+        {hint("HUDText", "false")}
+        {tagged("TitleMusic", "tm2", "(bind atm2 (Utilities|Casting|CastToAmbientSound :Object tm2) (:then (Components|Activation|Deactivate :self (Class|AmbientSound|GetAudioComponent :self atm2))) (:CastFailed))")}
+        (Input|EnableInput :self ch :PlayerController (Game|GetPlayerController 0))
+        (Game|Player|SetViewTargetwithBlend :self (Game|GetPlayerController 0) :NewViewTarget ch :BlendTime 2.5)
+        (bind gi1 {GP}
+          (:then (Class|BPGameProgress|SetTitleShown :self gi1 :TitleShown true))
+          (:CastFailed))
+        (else
       (if (and (== {g('State')} 0) (< (Transformation|GetDistanceTo :self (Variables|Default|GetChair) :OtherActor ch) 190.0))
         (Variables|Default|SetState 1)
         {hint("HintSit", "true")}
+        {hint("HUDText", "true")}
         (Pawn|Components|CharacterMovement|DisableMovement :self (Class|Character|GetCharacterMovement :self ch))
         (Collision|SetActorEnableCollision :self ch :bNewActorEnableCollision false)
         (Transformation|SetActorLocationAndRotation :self ch :NewLocation (Transformation|GetActorLocation :self (Variables|Default|GetSeat)) :NewRotation (Transformation|GetActorRotation :self (Variables|Default|GetSeat)) :bTeleport true)
@@ -102,10 +128,10 @@ def director():
             (Utilities|FlowControl|Delay 5.5)
             (CameraFades|StartCameraFade :self (Game|GetPlayerCameraManager 0) :FromAlpha 0.0 :ToAlpha 1.0 :Duration 2.5 :Color {SIL} :bHoldWhenFinished true)
             (Utilities|FlowControl|Delay 2.6)
-            (Game|OpenLevel(byName) :LevelName "M_FactoryHub")))))
+            (Game|OpenLevel(byName) :LevelName "M_FactoryHub")))))))
     (:CastFailed)))
 """
-    r = TG.run(DIR, code, events=["DoInteract"], binds=[("IA_Interact", [("Started", "DoInteract")])], clear=True)
+    r = TG.run(DIR, code, events=["DoInteract", "ShowTitle"], binds=[("IA_Interact", [("Started", "DoInteract")])], clear=True)
     b = EAL.load_asset(DIR)
     for n in ("Chair", "Seat", "SitDown", "SitIdle", "EarbudsAnim"): BEL.set_blueprint_variable_instance_editable(b, n, True)
     BEL.compile_blueprint(b); EAL.save_loaded_asset(b, False)
