@@ -11,11 +11,11 @@ def step(n, fn):
     except Exception: res["err"][n] = traceback.format_exc()[-1500:]
 M = {}
 def materials():
-    M["brick"] = K.asset(f"{MS}/MI_Bricks059"); M["conc"] = K.asset(f"{MS}/MI_W_WallPainted"); M["roof"] = K.mi("RoofSheet", "MetalCorroded", folder="Ind_Sheet_Metal_Corroded_26", tile=320.0, rough=0.85, metal=0.3, tint=(0.22, 0.22, 0.24))
-    M["steel"] = K.mi("SteelDark", "MetalCorroded", folder="Ind_Sheet_Metal_Corroded_27", tile=220.0, rough=0.75, metal=0.7, tint=(0.42, 0.42, 0.45))
-    M["rail"] = K.mi("RailPaint", "MetalCorroded", folder="Ind_Sheet_Metal_Scratched_02", tile=160.0, rough=0.6, metal=0.6, tint=(0.55, 0.5, 0.3))
-    M["grate"] = K.mi("Grate", "MetalCorroded", folder="Ind_Sheet_Metal_Scratched_02", tile=140.0, rough=0.6, metal=0.7, tint=(0.4, 0.42, 0.45))
-    M["floor"] = K.mi("FloorWet", "FloorDirty", folder="Ind_Floor_Concrete_16", tile=520.0, rough=0.32, tint=(0.6, 0.63, 0.66))
+    M["brick"] = K.asset(f"{MS}/MI_Bricks059"); M["conc"] = K.asset(f"{MS}/MI_W_WallPainted"); M["roof"] = K.mi("RoofSheet", "MetalCorroded", tile=320.0, rough=0.85, metal=0.3, tint=(0.22, 0.22, 0.24))
+    M["steel"] = K.mi("SteelDark", "MetalCorroded", tile=220.0, rough=0.75, metal=0.7, tint=(0.42, 0.42, 0.45))
+    M["rail"] = K.mi("RailPaint", "MetalCorroded", tile=160.0, rough=0.6, metal=0.6, tint=(0.55, 0.5, 0.3))
+    M["grate"] = K.mi("Grate", "MetalCorroded", tile=140.0, rough=0.6, metal=0.7, tint=(0.4, 0.42, 0.45))
+    M["floor"] = K.mi("FloorWet", "FloorDirty", tile=420.0, rough=0.32, tint=(0.6, 0.63, 0.66))
     M["rust"] = K.asset(f"{MS}/MI_W_MetalCorroded"); M["black"] = K.asset(f"{MS}/M_BlackAluminum"); M["inv"] = K.asset(f"{MS}/M_Invisible")
     M["glass"] = K.glow("M_FacWindowStreet", (0.5, 0.68, 1.0), 1.1); M["glass_warm"] = K.glow("M_FacWindowSodium", (1.0, 0.62, 0.3), 1.0); M["glass_dim"] = K.glow("M_FacWindowDim", (0.22, 0.3, 0.45), 0.25)
     return sorted(M.keys())
